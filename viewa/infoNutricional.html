@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- CSS only -->
+    <link rel="stylesheet" href="../styles/estilo.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT"
+      crossorigin="anonymous"
+    />
+    <title>Info</title>
+  </head>
+  <body class="cuerpo" onload="mostarInfoComida();mostarInfoDetalladaComida() ">
+    <header>
+      <nav class="navbar bg-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand text-light" href="#">Info Nutricional</a>
+          <a class="navbar-brand text-light" href="../index.html">Volver</a>
+        </div>
+      </nav>
+    </header>
+    <main class="container">
+      <div class="cartaDeInfo"></div>
+      <div class="infoDetallada"></div>
+    </main>
+
+    <footer
+      class="text-center text-lg-start bg-dark text-muted"
+      style="position: absolute; bottom: 0; width: 100%"
+    >
+      <div
+        class="text-center p-4"
+        style="background-color: rgba(0, 0, 0, 0.025)"
+      >
+        © 2022 Copyright:
+        <a class="text-reset fw-bold" href="https://github.com/Lucho-afk"
+          >Lucho</a
+        >
+      </div>
+      <!-- Copyright -->
+      <!--esto es un parche que meti porque tengo que separar todos los js y no me da el tiempo-->
+      <div style="display: none" id="botonCarrito"></div>
+      <div style="display: none" id="modal-body"></div>
+      <div style="display: none" id="modalCerrar"></div>
+      <div style="display: none" id="precioTotal"></div>
+      <div style="display: none" id="totalAPagarEfectivo"></div>
+      <div style="display: none" id="moverAModalEfectivo"></div>
+      <div style="display: none" id="pagoEnEfectivo"></div>
+      <div style="display: none" id="moverAModalQr"></div>
+      <div style="display: none" id="moverAModalQr"></div>
+    </footer>
+    <!-- JavaScript Bundle with Popper -->
+    <script src="../index.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+      crossorigin="anonymous"
+    ></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  </body>
+</html>

@@ -1,0 +1,19 @@
+.cuerpo {
+  background-color: #fff9f2;
+  opacity: 1;
+  background-image: linear-gradient(135deg, #bbc9ff 25%, transparent 25%),
+    linear-gradient(225deg, #bbc9ff 25%, transparent 25%),
+    linear-gradient(45deg, #bbc9ff 25%, transparent 25%),
+    linear-gradient(315deg, #bbc9ff 25%, #fff9f2 25%);
+  background-position: 4px 0, 4px 0, 0 0, 0 0;
+  background-size: 4px 4px;
+  background-repeat: repeat;
+}
+
+#carrito {
+  position: absolute;
+  right: 20px;
+  background-color: red;
+  border-radius: 12px;
+  padding-inline: 5px;
+}
