@@ -1,10 +1,3 @@
-/*
-    Hola luis disculpame probablemnte me estoy pasando con el alcance, 
-    pero consegui laburo despues de haberme anotado a toda la carrera y tuve que meterle fast al aprendizaje,
-    sigo aprendiendo y creo que esta parte del curso me va a ser muy util, pero se me mezclan los conceptos y los alcances,
-    no es que quiera ser arrogante pero es que realmente no se como manejar el alcance que quieren en los entregables,
-    por favor teneme paciencia, desde ya muchas gracias y perdon por molestarte.
-*/
 /*----declaro unas globales----*/
 
 let BOTON_CARRITO = document.getElementById("botonCarrito");
@@ -18,7 +11,10 @@ let EFECTIVO_TOTAL = document.getElementById("totalAPagarEfectivo");
 let MODAL_BOTON_PAGAR = document.getElementById("moverAModalEfectivo");
 let EFECTIVO_BOTON_PAGAR = document.getElementById("pagoEnEfectivo");
 let QR_BOTON_PAGAR = document.getElementById("moverAModalQr");
-let TARJETA_BOTON_PAGAR = document.getElementById("enviarFormulario");
+let TARJETA_BOTON_VALIDAR = document.getElementById("enviarFormulario");
+let MODAL_TARJETA_CREDITO = document.getElementById("moverLmodalPorTarjeta");
+let BOTON_PAGAR_TARJETA = document.getElementById("pagarTarjetaDeCredito");
+
 let comidas = [
   {
     id: 1,
@@ -113,39 +109,17 @@ function mostarComida() {
         </div>
         
     `
-  ); //esto lo tengo que poner mas fachero no se me ocurre con que quizas un dropdown
+  );
   lugarDeMuestraDeComida.innerHTML = array.join(``);
-
-  // array [c1 c2 c3 c4 c5]
 }
 
 function validador(numero) {
   return isNaN(numero);
 }
 
-/*-------------------------metodo de pago(en construccion)--------------------------------------*/
-
-function metodoDePago(key, precio) {
-  console.log(key);
-  switch (key) {
-    case 1:
-      pagoConTarjeta();
-      break;
-    case 2:
-      efectivo(precio);
-      break;
-    case 3:
-      pagoConQR();
-      break;
-    default:
-      break;
-  }
-}
-
-/*-------------------------pago con tarjeta(en construccion)-----------------------------------*/
-// a esto lo quiero sacar con un modal y un formulario en ves de pedir la tarjeta por un pront
-
-TARJETA_BOTON_PAGAR.addEventListener("click", () => {
+/*-------------------------pago con tarjeta-----------------------------------*/
+BOTON_PAGAR_TARJETA.setAttribute("disabled", "true");
+TARJETA_BOTON_VALIDAR.addEventListener("click", () => {
   pagoConTarjeta();
 });
 
@@ -206,42 +180,89 @@ function pagoConTarjeta() {
       return;
       break;
   }
-  pagoEnCuotas();
-  interes();
+  let cantCuotasGlobal = pagoEnCuotas();
+
+  cantCuotasGlobal.addEventListener("change", () => {
+    BOTON_PAGAR_TARJETA.removeAttribute("disabled");
+    let numeroDeCuotas = document.getElementById("cantCuotas").value;
+    calculoInteres(numeroDeCuotas);
+  });
 }
+
+BOTON_PAGAR_TARJETA.addEventListener("click", () => {
+  Swal.fire({
+    icon: "success",
+    title: "Gracias por su compra.",
+    showConfirmButton: false,
+    timer: 2500,
+  });
+  setTimeout(() => {
+    recargar();
+  }, 2500);
+});
 
 function calculoInteres(numeroDeCuotas) {
   let totalInteres = document.getElementById("totalInteres");
-  switch (numeroDeCuotas) {
+  switch (parseInt(numeroDeCuotas)) {
     case 1:
-      totalInteres.innerHTML = `<div>Te quedaria el pago en 1 cuota de:${
-        TOTAL * 1
-      }</div>`;
+      totalInteres.innerHTML = `<div style="
+      display: flex;
+      flex-wrap: nowrap;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      font-family: fantasy;
+      flex-direction: column;
+  "><p>Total a pagar: ${TOTAL}</p><p>en 1 cuota de: ${(TOTAL * 1).toFixed(
+        2
+      )}</p></div>`;
       break;
     case 3:
-      totalInteres.innerHTML = `<div>Te quedaria el pago en 3 cuotas de:${
-        (TOTAL * 1.15) / 3
-      }</div>`;
+      totalInteres.innerHTML = `<div style="
+      display: flex;
+      flex-wrap: nowrap;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      font-family: fantasy;
+      flex-direction: column;
+  "><p>Total a pagar: ${TOTAL}</p><p>en 3 cuota de: ${(
+        (TOTAL * 1.15) /
+        3
+      ).toFixed(2)}</p></div>`;
       break;
     case 6:
-      totalInteres.innerHTML = `<div>Te quedaria el pago en 6 cuotas de:${
-        (TOTAL * 1.25) / 6
-      }</div>`;
+      totalInteres.innerHTML = `<div style="
+      display: flex;
+      flex-wrap: nowrap;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      font-family: fantasy;
+      flex-direction: column;
+  "><p>Total a pagar: ${TOTAL}</p><p>en 6 cuota de: ${(
+        (TOTAL * 1.25) /
+        6
+      ).toFixed(2)}</p></div>`;
       break;
     case 12:
-      totalInteres.innerHTML = `<div>Te quedaria el pago en 12 cuotas de:${
-        (TOTAL * 1.45) / 12
-      }</div>`;
+      totalInteres.innerHTML = `<div style="
+      display: flex;
+      flex-wrap: nowrap;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      font-family: fantasy;
+      flex-direction: column;
+  "><p>Total a pagar: ${TOTAL}</p><p>en 12 cuota de: ${(
+        (TOTAL * 1.45) /
+        12
+      ).toFixed(2)}</p></div>`;
       break;
 
     default:
       break;
   }
-}
-
-function interes() {
-  let cuotas = document.getElementById("cantCuotas").value;
-  console.log("llega al interes");
 }
 
 function pagoEnCuotas() {
@@ -259,6 +280,8 @@ function pagoEnCuotas() {
   <option value="6">6</option>
   <option value="12">12</option>
 </select>`;
+  let cantCuotas = document.getElementById("cantCuotas");
+  return cantCuotas;
 }
 
 function isValidNombre(nombre) {
@@ -274,10 +297,6 @@ function isValidMaster(master) {
   let regex = /5[1-5][0-9]{14}$/;
   return regex.test(master);
 }
-
-//metodo de pago
-//tarjeta de credito - efectivo - qr
-//lo quiero sacar con un modal
 
 /*----------------------------pago por efectivo-------------------------------*/
 
@@ -340,33 +359,7 @@ function calcularVuelto(efectivoDelCliente, precio) {
   }
 }
 
-/*
-function calcularVuelto(efectivoDelCliente, precio) {
-  let pago = efectivoDelCliente;
-  let resta = precio - pago;
-  pago = 0;
-  let aux = 25;
-  while (resta > 0) {
-    if (
-      confirm(
-        `Su saldo es insuficiente, le falta: ${resta}$ ¿quiere agregar dinero?`
-      )
-    ) {
-      aux = parseFloat(prompt(`Total a pagar: ${resta}$, Ingrese su dinero.`));
-      if (validador(aux)) return "numero invalido reinicie la operacion";
-      pago = pago + aux;
-      resta = resta - pago;
-      pago = 0;
-    } else {
-      pago = 0;
-      return "adios";
-    }
-  }
-  pago = 0;
-  return `Muchas gracias por su compra, su vuelto es: ${-1 * resta}$`;
-}
-*/
-/*------------------------------pago con qr(en construccion)-------------------------------------*/
+/*------------------------------pago con qr-------------------------------------*/
 QR_BOTON_PAGAR.addEventListener("click", () => pagoConQR());
 function pagoConQR() {
   let QR_BODY = document.getElementById("qr");
@@ -385,13 +378,8 @@ function pagoConQR() {
   }
 }
 
-/*------------------------------levantar un modal(en construccion)-------------------------------*/
-
 /*--------------------------------------carrito de compras---------------------------------------*/
 
-/* hola luis si lees esto me aclaras una duda? : 
-estos objetos en js siguen las normas de los objetos?
-[encapsulamiento,poliformismo,herencia,abstraccion]*/
 class Compra {
   constructor(productos, monto) {
     this.producto = productos;
@@ -425,11 +413,11 @@ function itemCarrito(objetoComida) {
 </div>`;
 }
 
-// quizas aca habria que implementar una funcion de agrupamiento entre productos por ejemplo: 3 x milanesas = 6k
 function cuentaDeCarrito() {
   borrarCarrito();
   if (ARRAY_COMIDAS.length > 0) {
     MODAL_BOTON_PAGAR.removeAttribute("disabled");
+    MODAL_TARJETA_CREDITO.removeAttribute("disabled");
     QR_BOTON_PAGAR.removeAttribute("disabled");
     ARRAY_COMIDAS.forEach((c) => {
       let objetoComida = comidas.find((element) => element.nombre == c);
@@ -439,6 +427,7 @@ function cuentaDeCarrito() {
     console.log(ARRAY_COMIDAS.length);
     MODAL_CARRITO.innerHTML = `No seleccionaste ningun producto por ahora`;
     MODAL_BOTON_PAGAR.setAttribute("disabled", "true");
+    MODAL_TARJETA_CREDITO.setAttribute("disabled", "true");
     QR_BOTON_PAGAR.setAttribute("disabled", "true");
   }
   MODAL_PRECIO_TOTAL.innerHTML = `<div style="font-size:40px;display: flex;justify-content: flex-end;margin-right: 20px;">Total:${TOTAL}</div>`;

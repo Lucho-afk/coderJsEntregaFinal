@@ -101,7 +101,7 @@
                 qr
               </button>
               <button
-                id="moverAModalQr"
+                id="moverLmodalPorTarjeta"
                 data-bs-toggle="modal"
                 data-bs-target="#pagoConTarjeta"
                 class="btn btn-primary"
@@ -235,7 +235,7 @@
               <div class="row ml-ato">
                 <form>
                   <div class="form-group">
-                    <label for="nombre">tarjeta</label>
+                    <label for="nombre">Tarjeta</label>
                     <select
                       name="tarjeta"
                       id="tarjeta"
@@ -277,12 +277,12 @@
                     />
                   </div>
                   <div class="form-group">
-                    <label for="cvu">cvu</label>
+                    <label for="cvu">CVU</label>
                     <input
                       type="number"
                       class="form-control"
                       id="cvu"
-                      placeholder="Enter email"
+                      placeholder="CVU"
                       max="999"
                       min="100"
                     />
@@ -307,7 +307,14 @@
                 class="btn btn-secondary"
                 id="enviarFormulario"
               >
-                Enviar
+                validar
+              </button>
+              <button
+                type="button"
+                class="btn btn-primary"
+                id="pagarTarjetaDeCredito"
+              >
+                pagar
               </button>
             </div>
           </div>
